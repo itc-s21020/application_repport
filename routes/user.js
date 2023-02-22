@@ -27,12 +27,25 @@ router.post('/login', async (req, res) => {
     if (student == null) {
         res.json({status: 0})
     }else {
+        req.session.student = student
         res.json({status: 1})
     }
 })
 
+router.get('/info', (req, res) => {
+    const student = req.session.student
+    if (student === undefined) {
+        res.send("loginしていません")
+    }else {
+        res.json(student)
+    }
+
+})
+
 router.get('/logout', (req, res) => {
+    req.session.student = undefined
     res.json({status: 0})
+
 })
 
 module.exports = router
