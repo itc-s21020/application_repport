@@ -39,7 +39,6 @@ router.get('/info', (req, res) => {
     }else {
         res.json(student)
     }
-
 })
 
 router.get('/logout', (req, res) => {

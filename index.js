@@ -7,6 +7,7 @@ const session = require('express-session')
 module.exports = prisma
 const router = express.Router()
 const userRouter = require('./routes/user')
+const absenceRouter = require('./routes/absence')
 
 app.use(express.json())
 app.use(session({
@@ -26,5 +27,14 @@ router.get('/', (req, res) =>{
 
 app.use(router)
 app.use(userRouter)
+app.use('/absences', (req, res, next) => {
+    const student = req.session.student
+    if (student === undefined) {
+        res.send('ログインしていません')
+    }else {
+        next()
+    }
+}, absenceRouter)
+
 
 app.listen(3000, () => console.log('サーバー起動しました'))
